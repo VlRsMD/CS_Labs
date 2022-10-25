@@ -1,5 +1,86 @@
 package ciphers;
 
-public class blockCipher {
+import java.util.Scanner;
 
+public class blockCipher {
+    // convert string to an integer array
+    static int[] stringToIntArray(String string) {
+        int l = string.length();
+        char[] charArr = new char[l];
+        for (int i = 0; i < l; i++) {
+            charArr[i] = string.charAt(i);
+        }
+        int [] intArr = new int [l];
+        for(int i=0; i<l; i++) {
+            intArr[i] = Integer.parseInt(String.valueOf(charArr[i]));
+        }
+        return intArr;
+    }
+
+    // convert integer array to string
+    static String intArrayToString(int[] intArr) {
+        StringBuffer sBf = new StringBuffer();
+        String strSep = " ";
+        for(int i=0; i < intArr.length; i++){
+            sBf.append(intArr[i]);
+        }
+        String res = sBf.toString();
+        return res;
+    }
+
+    static String encrypt(String plaintext, String keystream) {
+        int[] plaintextInt = stringToIntArray(plaintext);
+        int[] keystreamInt = stringToIntArray(keystream);
+        int[] ciphertextInt = new int[plaintextInt.length];
+        int k = keystreamInt.length;
+        // calculating the number  of block usages
+        int nOfBlocks = plaintextInt.length / k;
+        // calculating the remainder of dividing the plaintext length by the keystream length
+        int rem = plaintextInt.length % k;
+        for (int i = 0; i<nOfBlocks; i++)
+            for (int j=0; j<k; j++) {
+                // perform XOR operations
+                if (plaintextInt[i*k+j]==0 && keystreamInt[j]==0) {
+                    ciphertextInt[i*k+j] = 0;
+                }
+                if (plaintextInt[i*k+j]==0 && keystreamInt[j]==1) {
+                    ciphertextInt[i*k+j] = 1;
+                }
+                if (plaintextInt[i*k+j]==1 && keystreamInt[j]==0) {
+                    ciphertextInt[i*k+j] = 1;
+                }
+                if (plaintextInt[i*k+j]==1 && keystreamInt[j]==1) {
+                    ciphertextInt[i*k+j] = 0;
+                }
+            }
+        // encrypting last bits which are left after consecutive usage of the full length keystream block
+        if (rem>0) {
+            for (int i=0; i<rem; i++) {
+                if (plaintextInt[i*k+nOfBlocks]==0 && keystreamInt[i]==0) {
+                    ciphertextInt[i*k+nOfBlocks] = 0;
+                }
+                if (plaintextInt[i*k+nOfBlocks]==0 && keystreamInt[i]==1) {
+                    ciphertextInt[i*k+nOfBlocks] = 1;
+                }
+                if (plaintextInt[i*k+nOfBlocks]==1 && keystreamInt[i]==0) {
+                    ciphertextInt[i*k+nOfBlocks] = 1;
+                }
+                if (plaintextInt[i*k+nOfBlocks]==1 && keystreamInt[i]==1) {
+                    ciphertextInt[i*k+nOfBlocks] = 0;
+                }
+            }
+        }
+        String ciphertext = intArrayToString(ciphertextInt);
+        return ciphertext;
+    }
+
+    public static void main(String[] args) {
+        // encrypt and decrypt data from input
+        Scanner in = new Scanner(System.in);
+        System.out.println("Input plaintext Nr. 1: ");
+        String plaintext= in.nextLine();
+        System.out.println("Input the keystream for encryption (please let it be of the same length as the plaintext Nr.1): ");
+        String keystream = in.nextLine();
+        System.out.println("The ciphertext is: " + encrypt(plaintext, keystream));
+    }
 }
