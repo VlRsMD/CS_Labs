@@ -3,59 +3,54 @@ package ciphers;
 import java.util.Scanner;
 
 public class vigenereCipher {
-    // generate key
-    static String Key(String str, String k)
-    {
-        int x = str.length();
-        for (int m = 0; ; m++)
-        {
-            if (x == m)
-                m = 0;
-            if (k.length() == str.length())
-                break;
-            k+=(k.charAt(m));
-        }
-        return k;
-    }
+    public static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
 
     // encrypting text
-    static String encr(String str, String k)
-    {
-        String cipher="";
-
-        for (int t = 0; t < str.length(); t++)
+    public static String vigenereCipherEncr(String plaintext, String keystream) {
+        char[] pTextArrayChar = plaintext.toLowerCase().toCharArray();
+        char[] keyArrayChar = keystream.toLowerCase().toCharArray();
+        String encrMessage = "";
+        for (int k=0; k<pTextArrayChar.length && k<keyArrayChar.length; k++)
         {
-            int x = (str.charAt(t) + k.charAt(t)) %26;
-            x += 'A';
-            cipher+=(char)(x);
+            int encrCharPos = (alphabetEng.indexOf(pTextArrayChar[k]) + alphabetEng.indexOf(keyArrayChar[k])) % 26;
+            char encrChar = alphabetEng.charAt(encrCharPos);
+            encrMessage+=encrChar;
         }
-        return cipher;
+        return encrMessage;
     }
 
     // decrypting text
-    static String decr(String cipher, String k)
-    {
-        String decr_text="";
-        for (int t = 0 ; t < cipher.length() && t < k.length(); t++)
+    public static String vigenereCipheDecr(String ciphertext, String keystream) {
+        char[] cTextArrayChar = ciphertext.toLowerCase().toCharArray();
+        char[] keyArrayChar = keystream.toLowerCase().toCharArray();
+        String decrMessage = "";
+        for (int k=0; k<cTextArrayChar.length && k<keyArrayChar.length; k++)
         {
-            int x = (cipher.charAt(t) - k.charAt(t) + 26) %26;
-            x += 'A';
-            decr_text+=(char)(x);
+            int decrCharPos = (alphabetEng.indexOf(cTextArrayChar[k]) - alphabetEng.indexOf(keyArrayChar[k]) + 26) % 26;
+            char decrChar = alphabetEng.charAt(decrCharPos);
+            decrMessage+=decrChar;
         }
-        return decr_text;
+        return decrMessage;
     }
+
 
     public static void main(String[] args)
     {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Input plaintext: ");
-        String S = scan.nextLine();
-        System.out.println("Ciphertext: ");
-        String K = scan.nextLine();
-        String string = S.toUpperCase();
-        String key = K.toUpperCase();
-        String k = Key(string, key);
-        System.out.println("Ciphertext: " + encr(string, k).toLowerCase() + "\n");
-        System.out.println("Decrypted Text: " + decr(encr(string, k), k).toLowerCase());
+        Scanner scan0 = new Scanner(System.in);
+        System.out.println("Input plaintext nr. 1: ");
+        String pt = scan0.nextLine();
+        System.out.println("Input keystream nr. 1: ");
+        String kP = scan0.nextLine();
+        String ptS = pt.toLowerCase();
+        String kPS = kP.toLowerCase();
+        Scanner scan1 = new Scanner(System.in);
+        System.out.println("Input ciphertext nr. 2: ");
+        String ct = scan1.nextLine();
+        System.out.println("Input keystream nr. 2: ");
+        String kC = scan1.nextLine();
+        String ctS = ct.toLowerCase();
+        String kCS = kC.toLowerCase();
+        System.out.println("The encrypted ciphertext for plaintext nr. 1 is: " + vigenereCipherEncr(ptS, kPS) + "\n");
+        System.out.println("The decrypted plaintext for ciphertext nr. 2 is: " + vigenereCipheDecr(ctS, kCS));
     }
 }

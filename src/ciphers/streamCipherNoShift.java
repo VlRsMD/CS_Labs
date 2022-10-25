@@ -1,7 +1,7 @@
 package ciphers;
 import java.util.Scanner;
 
-public class streamCipher {
+public class streamCipherNoShift {
     // convert string to an integer array
     static int[] stringToIntArray(String string) {
         int l = string.length();
