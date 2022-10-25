@@ -77,10 +77,10 @@ public class blockCipher {
     public static void main(String[] args) {
         // encrypt and decrypt data from input
         Scanner in = new Scanner(System.in);
-        System.out.println("Input plaintext Nr. 1: ");
+        System.out.println("Input plaintext: ");
         String plaintext= in.nextLine();
-        System.out.println("Input the keystream for encryption (please let it be of the same length as the plaintext Nr.1): ");
+        System.out.println("Input keystream: ");
         String keystream = in.nextLine();
-        System.out.println("The ciphertext is: " + encrypt(plaintext, keystream));
+        System.out.println("Ciphertext is: " + encrypt(plaintext, keystream));
     }
 }
