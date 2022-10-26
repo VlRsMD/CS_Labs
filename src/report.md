@@ -1,6 +1,7 @@
-<p><strong style="color: black;">Intro to Cryptography. Classical ciphers. Caesar cipher.</strong></p><p><span style="color: black;"> </span></p><p><span style="color: black;"> </span><strong style="color: black;">Course: Cryptography &amp; Security</strong></p><p><span style="color: black;"> </span></p><p><span style="color: black;"> </span><strong style="color: black;">Task: Laboratory work nr. 1</strong></p><p><span style="color: black;"> </span></p><p><span style="color: black;"> </span><strong style="color: black;">Author: Vladimir Russu</strong></p><p><strong style="color: black;">&nbsp;</strong></p><p><strong style="color: black;">&nbsp;</strong></p><p><strong style="color: black;">Overview</strong></p><p><br></p><p>This project contains laboratory works nr.&nbsp;1 and nr.&nbsp;2&nbsp;for the Cryptography&nbsp;&amp;&nbsp;Security course.</p><p>In&nbsp;"caesarCipherNoPermutation"&nbsp;class encryption and decryption&nbsp;according to Caesar algorithm with no permutations are done.&nbsp;In&nbsp;"caesarCipherWithPermutation"&nbsp;class encryption and decryption according to Caesar algorithm&nbsp;with permutations are done.&nbsp;Next the Vigenere algorithm and the Playfair algorithms are implemented.&nbsp;Next Stream cipher and Block cipher are implemented.</p><p><strong><em>Caesar Cipher with No Permutations</em></strong></p><pre class="ql-syntax" spellcheck="false">In the "caesarCipherNoPermutations" class there are two methods for cryptograhic operations: 
-
-one is for encryption and another is for decryption. The method for decryption is the following:
+<p><strong style="color: black;">Intro to Cryptography. Classical ciphers. Caesar cipher.</strong></p><p><span style="color: black;"> </span></p><p><span style="color: black;"> </span><strong style="color: black;">Course: Cryptography &amp; Security</strong></p><p><span style="color: black;"> </span></p><p><span style="color: black;"> </span><strong style="color: black;">Task: Laboratory work nr. 1</strong></p><p><span style="color: black;"> </span></p><p><span style="color: black;"> </span><strong style="color: black;">Author: Vladimir Russu</strong></p><p><strong style="color: black;">&nbsp;</strong></p><p><strong style="color: black;">&nbsp;</strong></p><p><strong style="color: black;">Overview</strong></p><p><br></p><p>This project contains laboratory works nr.&nbsp;1 and nr.&nbsp;2&nbsp;for the Cryptography&nbsp;&amp;&nbsp;Security course.</p><p>In&nbsp;"caesarCipherNoPermutation"&nbsp;class encryption and decryption&nbsp;according to Caesar algorithm with no permutations are done.&nbsp;In&nbsp;"caesarCipherWithPermutation"&nbsp;class encryption and decryption according to Caesar algorithm&nbsp;with permutations are done.&nbsp;Next the Vigenere algorithm and the Playfair algorithms are implemented.&nbsp;Next Stream cipher and Block cipher are implemented.</p><p><strong><em>Caesar Cipher with No Permutations</em></strong></p>
+<p>In the "caesarCipherNoPermutations" class there are two methods for cryptograhic operations:
+one is for encryption and another is for decryption. The method for decryption is the following:</p>
+<pre class="ql-syntax" spellcheck="false">
 // encrypting text
 
 public static String caesarCipherEncr(String message, int substitutionKey) {
@@ -90,7 +91,14 @@ public static String removeCharsOfPermutation(String str1, String str2)
 &nbsp;
 Plaintexti = (Ciphertexti - Keystreami + 26) mod 26 – for decryption
 &nbsp;
-</pre><p><br></p><p><strong><em>Playfair Cipher </em></strong></p><pre class="ql-syntax" spellcheck="false">In the “playfairCipher” class there are 3 methods used for the cryptographic operations: one is for encryption and another is for decryption. In both those methods there are 2 parameters. There is the “pairRC” method to identify the row and column position in the 5*5 encryption matrix for encrypting the pair. Further this method is called in the “playfairEnc” method which does the encryption itself. There is also a method “duplicateElim” to eliminate the duplicates from the key string. And there is also a method “whiteSpaceElim” to eliminate white spaces which occur after removing from the standard alphabet the chars of the keystream. Finally those relevant methods are called in the main() method in order to get the output:
+</pre>
+<p>In this cipher implementation there are also two methods: one for encryption and for decryption. The encryption method takes as parameter the plaintext string and the keystream string and then converts those string to char arrays in order to easier access chars with particular indexes for encrypting the plaintext
+The decryption method uses as parameters the ciphertext string and the keystream string and further converts both those strings into char arrays in order to make easier the access to particular chars position in order to get the plaintext. 
+</p>
+<p><strong><em>Playfair Cipher </em></strong>
+</p>
+<p>In the “playfairCipher” class there are 3 methods used for the cryptographic operations: one is for encryption and another is for decryption. In both those methods there are 2 parameters. There is the “pairRC” method to identify the row and column position in the 5*5 encryption matrix for encrypting the pair. Further this method is called in the “playfairEnc” method which does the encryption itself. There is also a method “duplicateElim” to eliminate the duplicates from the key string. And there is also a method “whiteSpaceElim” to eliminate white spaces which occur after removing from the standard alphabet the chars of the keystream. Finally those relevant methods are called in the main() method in order to get the output:</p>
+<pre class="ql-syntax" spellcheck="false">
 Scanner scan = new Scanner(System.in);
 
 System.out.println("Input plaintext: ");
@@ -138,7 +146,9 @@ pt = playfairEnc(pt, matrix);
 System.out.println("Ciphertext is: " + pt);
 &nbsp;
 &nbsp;
-</pre><p><br></p><p><strong><em>Stream Cipher with No Shift</em></strong></p><pre class="ql-syntax" spellcheck="false">In the “streamCipherNoShift” class the stream cipher algorithm without shifts is implemented. There are 4 methods: the first 2 are being used in order to convert a bit string into an integer array and vice versa. Those methods are then being used in the method for encryption, which is done by performing XOR operations on the plaintext text and the keystream:
+</pre><p><br></p><p><strong><em>Stream Cipher with No Shift</em></strong></p>
+<p>In the “streamCipherNoShift” class the stream cipher algorithm without shifts is implemented. There are 4 methods: the first 2 are being used in order to convert a bit string into an integer array and vice versa. Those methods are then being used in the method for encryption, which is done by performing XOR operations on the plaintext text and the keystream:</p>
+<pre class="ql-syntax" spellcheck="false">
 static String encryption(String plaintext, String keystream) {
 
 &nbsp;&nbsp;&nbsp; int[] plaintextInt = stringToIntArray(plaintext);
