@@ -1,41 +1,39 @@
 package ciphers;
-import java.util.*;
+import interfaces.cipherTextKeyIntPerm;
 
-public class caesarCipherWithPermutation {
-    public static String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
-
-    // encypting text
-    public static String caesarCipherEncr(String message, int substitutionKey, String permutation) {
-        char[] inputArrayChar = message.toLowerCase().toCharArray();
+public class caesarCipherWithPermutation implements cipherTextKeyIntPerm {
+    public static String encrypt(String plaintext, int key, String permutation) {
+        String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
+        char[] inputArrayChar = plaintext.toLowerCase().toCharArray();
         String permToL = permutation.toLowerCase();
         // new alphabet after applying permutation key
         String newAlph = permToL + removeCharsOfPermutation(alphabetEng, permToL);
         String encrMessage = "";
         for (int k=0; k<inputArrayChar.length; k++)
         {
-            int encrCharPos = (newAlph.indexOf(inputArrayChar[k]) + substitutionKey) % 26;
+            int encrCharPos = (newAlph.indexOf(inputArrayChar[k]) + key) % 26;
             char encrChar = newAlph.charAt(encrCharPos);
             encrMessage+=encrChar;
         }
         return encrMessage;
     }
 
-    // decrypting text
-    public static String caesarCipherDecr(String message, int substitutionKey, String permutation) {
-        char[] inputArrayChar = message.toLowerCase().toCharArray();
+    public static String decrypt(String ciphertext, int key, String permutation) {
+        String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
+        char[] inputArrayChar = ciphertext.toLowerCase().toCharArray();
         String permToL = permutation.toLowerCase();
         // new alphabet after applying permutation key
         String newAlph = permToL + removeCharsOfPermutation(alphabetEng, permToL);
         String decrMessage = "";
         for (int k=0; k<inputArrayChar.length; k++)
         {
-            if(newAlph.indexOf(inputArrayChar[k]) >= substitutionKey) {
-                int decrCharPos = (newAlph.indexOf(inputArrayChar[k]) - substitutionKey) % 26;
+            if(newAlph.indexOf(inputArrayChar[k]) >= key) {
+                int decrCharPos = (newAlph.indexOf(inputArrayChar[k]) - key) % 26;
                 char decrChar = newAlph.charAt(decrCharPos);
                 decrMessage += decrChar;
             }
-            if(permutation.indexOf(inputArrayChar[k]) < substitutionKey) {
-                int decrCharPos = (26 + newAlph.indexOf(inputArrayChar[k]) - substitutionKey) % 26;
+            if(permutation.indexOf(inputArrayChar[k]) < key) {
+                int decrCharPos = (26 + newAlph.indexOf(inputArrayChar[k]) - key) % 26;
                 char decrChar = newAlph.charAt(decrCharPos);
                 decrMessage += decrChar;
             }
@@ -57,7 +55,7 @@ public class caesarCipherWithPermutation {
         return str1;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println("Input the text of the message to be encrypted: ");
         String messageIn_E = in.nextLine();
@@ -76,5 +74,5 @@ public class caesarCipherWithPermutation {
         String permutKeyIn_D = inPD.nextLine();
         System.out.println("The encrypted message is: " + caesarCipherEncr(messageIn_E, substKeyIn_E, permutKeyIn_E));
         System.out.println("The decrypted message is: " + caesarCipherDecr(messageIn_D, substKeyIn_D, permutKeyIn_D));
-    }
+    }*/
 }

@@ -1,9 +1,9 @@
 package ciphers;
+import interfaces.cipherTextKeystr;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
-public class playfairCipher {
+public class playfairCipher implements cipherTextKeystr {
     // identify row and column position in order to encrypt the pair
     static int[] pairRC(char row, char col, char pos[][])
     {
@@ -37,34 +37,6 @@ public class playfairCipher {
         return arr;
     }
 
-    // encrypting text
-    static String playfairEnc(String plaintext, char res[][])
-    {
-        char chPt[] = plaintext.toCharArray();
-        int a[] = new int[4];
-        for (int k = 0; k < plaintext.length(); k += 2) {
-            if (k < plaintext.length() - 1) {
-                a = pairRC(plaintext.charAt(k), plaintext.charAt(k + 1),
-                        res);
-                if (a[0] == a[2]) {
-                    chPt[k] = res[a[0]][a[1]];
-                    chPt[k + 1] = res[a[0]][a[3]];
-                }
-                else if (a[1] == a[3]) {
-                    chPt[k] = res[a[0]][a[1]];
-                    chPt[k + 1] = res[a[2]][a[1]];
-                }
-                else {
-                    chPt[k] = res[a[0]][a[3]];
-                    chPt[k + 1] = res[a[2]][a[1]];
-                }
-            }
-        }
-        String ciphertext = new String(chPt);
-        return ciphertext;
-    }
-
-    // eliminate white spaces
     static String whiteSpaceElim(char[] chArrK, String kS)
     {
         char[] c = kS.toCharArray();
@@ -97,51 +69,95 @@ public class playfairCipher {
         return keyStr;
     }
 
-    public static void main(String[] args)
+    static String encrypt(String plaintext, char matrix[][])
     {
-        // test case (the ciphertext should be "rfkconxvqekhrkkabr")
-        String pt0 = "sehenswurdigkeiten";
-        String keyS0 = "platz";
-        keyS0 = duplicateElim(keyS0);
-        char[] chK0 = keyS0.toCharArray();
-        String alph0 = "abcdefghiklmnopqrstuvwxyz";
-        alph0 = whiteSpaceElim(chK0, alph0);
-        char[] c0 = alph0.toCharArray();
-        char[][] x0 = new char[5][5];
+        char chPt[] = plaintext.toCharArray();
+        int a[] = new int[4];
+        for (int k = 0; k < plaintext.length(); k += 2) {
+            if (k < plaintext.length() - 1) {
+                a = pairRC(plaintext.charAt(k), plaintext.charAt(k + 1),
+                        matrix);
+                if (a[0] == a[2]) {
+                    chPt[k] = matrix[a[0]][a[1]];
+                    chPt[k + 1] = matrix[a[0]][a[3]];
+                }
+                else if (a[1] == a[3]) {
+                    chPt[k] = matrix[a[0]][a[1]];
+                    chPt[k + 1] = matrix[a[2]][a[1]];
+                }
+                else {
+                    chPt[k] = matrix[a[0]][a[3]];
+                    chPt[k + 1] = matrix[a[2]][a[1]];
+                }
+            }
+        }
+        String ciphertext = new String(chPt);
+        return ciphertext;
+    }
+
+    static String matrixCr(String ciphertext, char matrix[][])
+    {
+        char chPt[] = ciphertext.toCharArray();
+        int a[] = new int[4];
+        for (int k = 0; k < ciphertext.length(); k += 2) {
+            if (k < ciphertext.length() - 1) {
+                a = pairRC(ciphertext.charAt(k), ciphertext.charAt(k + 1),
+                        matrix);
+                if (a[0] == a[2]) {
+                    chPt[k] = matrix[a[0]][a[1]];
+                    chPt[k + 1] = matrix[a[0]][a[3]];
+                }
+                else if (a[1] == a[3]) {
+                    chPt[k] = matrix[a[0]][a[1]];
+                    chPt[k + 1] = matrix[a[2]][a[1]];
+                }
+                else {
+                    chPt[k] = matrix[a[0]][a[3]];
+                    chPt[k + 1] = matrix[a[2]][a[1]];
+                }
+            }
+        }
+        String plaintext = new String(chPt);
+        return plaintext;
+    }
+
+    public static String encrypt (String plaintext, String keystream) {
+        String keySNoDupl = duplicateElim(keystream);
+        char[] chKstr = keySNoDupl.toCharArray();
+        String alph = "abcdefghiklmnopqrstuvwxyz";
+        alph = whiteSpaceElim(chKstr, alph);
+        char[] chArr = alph.toCharArray();
+        char[][] matrix = new char[5][5];
         int stIndex0 = 0, keyIndex0 = 0;
         for (int k = 0; k < 5; k++) {
             for (int l = 0; l < 5; l++) {
-                if (keyIndex0 < keyS0.length())
-                    x0[k][l] = chK0[keyIndex0++];
+                if (keyIndex0 < keySNoDupl.length())
+                    matrix[k][l] = chKstr[keyIndex0++];
                 else
-                    x0[k][l] = c0[stIndex0++];
+                    matrix[k][l] = chArr[stIndex0++];
             }
         }
-        pt0 = playfairEnc(pt0, x0);
-        System.out.println("Ciphertext for plaintext 'sehenswurdigkeiten' and key 'platz' is: " + pt0);
-        // generating ciphertext from input data
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Input plaintext: ");
-        String pt = scan.nextLine();
-        System.out.println("Input keystream: ");
-        String keyS = scan.nextLine();
-        keyS = duplicateElim(keyS);
-        char[] chK = keyS.toCharArray();
+        String ciphertext = matrixCr(plaintext, matrix);
+        return ciphertext;
+    }
+
+    public static String decrypt (String ciphertext, String keystream) {
+        String keySNoDupl = duplicateElim(keystream);
+        char[] chKstr = keySNoDupl.toCharArray();
         String alph = "abcdefghiklmnopqrstuvwxyz";
-        alph = whiteSpaceElim(chK, alph);
-        char[] ch = alph.toCharArray();
+        alph = whiteSpaceElim(chKstr, alph);
+        char[] chArr = alph.toCharArray();
         char[][] matrix = new char[5][5];
-        int stIndex = 0, keyIndex = 0;
-        // fill the 5*5 matrix with keystream first and then with the modified alphabet without keystream chars
+        int stIndex0 = 0, keyIndex0 = 0;
         for (int k = 0; k < 5; k++) {
             for (int l = 0; l < 5; l++) {
-                if (keyIndex < keyS.length())
-                    matrix[k][l] = chK[keyIndex++];
+                if (keyIndex0 < keySNoDupl.length())
+                    matrix[k][l] = chKstr[keyIndex0++];
                 else
-                    matrix[k][l] = ch[stIndex++];
+                    matrix[k][l] = chArr[stIndex0++];
             }
         }
-        pt = playfairEnc(pt, matrix);
-        System.out.println("Ciphertext is: " + pt);
+        String plaintext = matrixCr(ciphertext, matrix);
+        return plaintext;
     }
 }

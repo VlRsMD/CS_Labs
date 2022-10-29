@@ -1,12 +1,9 @@
 package ciphers;
+import interfaces.cipherTextKeystr;
 
-import java.util.Scanner;
-
-public class vigenereCipher {
-    public static final String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
-
-    // encrypting text
-    public static String vigenereCipherEncr(String plaintext, String keystream) {
+public class vigenereCipher implements cipherTextKeystr {
+    public static String encrypt(String plaintext, String keystream) {
+        String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
         char[] pTextArrayChar = plaintext.toLowerCase().toCharArray();
         char[] keyArrayChar = keystream.toLowerCase().toCharArray();
         String encrMessage = "";
@@ -19,8 +16,8 @@ public class vigenereCipher {
         return encrMessage;
     }
 
-    // decrypting text
-    public static String vigenereCipheDecr(String ciphertext, String keystream) {
+    public static String decrypt(String ciphertext, String keystream) {
+        String alphabetEng = "abcdefghijklmnopqrstuvwxyz";
         char[] cTextArrayChar = ciphertext.toLowerCase().toCharArray();
         char[] keyArrayChar = keystream.toLowerCase().toCharArray();
         String decrMessage = "";
@@ -34,7 +31,7 @@ public class vigenereCipher {
     }
 
 
-    public static void main(String[] args)
+    /*public static void main(String[] args)
     {
         Scanner scan0 = new Scanner(System.in);
         System.out.println("Input plaintext nr. 1: ");
@@ -52,5 +49,5 @@ public class vigenereCipher {
         String kCS = kC.toLowerCase();
         System.out.println("The encrypted ciphertext for plaintext nr. 1 is: " + vigenereCipherEncr(ptS, kPS) + "\n");
         System.out.println("The decrypted plaintext for ciphertext nr. 2 is: " + vigenereCipheDecr(ctS, kCS));
-    }
+    }*/
 }

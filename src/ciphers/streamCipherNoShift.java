@@ -1,8 +1,7 @@
 package ciphers;
-import java.util.Scanner;
+import interfaces.cipherTextKeystr;
 
-public class streamCipherNoShift {
-    // convert string to an integer array
+public class streamCipherNoShift implements cipherTextKeystr {
     static int[] stringToIntArray(String string) {
         int l = string.length();
         char[] charArr = new char[l];
@@ -16,7 +15,6 @@ public class streamCipherNoShift {
         return intArr;
     }
 
-    // convert integer array to string
     static String intArrayToString(int[] intArr) {
         StringBuffer sBf = new StringBuffer();
         String strSep = " ";
@@ -28,7 +26,7 @@ public class streamCipherNoShift {
     }
 
     // encrypt
-    static String encryption(String plaintext, String keystream) {
+    public static String encrypt(String plaintext, String keystream) {
         int[] plaintextInt = stringToIntArray(plaintext);
         int[] keystreamInt = stringToIntArray(keystream);
         int[] ciphertextInt = new int[plaintextInt.length];
@@ -51,8 +49,7 @@ public class streamCipherNoShift {
         return ciphertext;
     }
 
-    // decrypt
-    static String decryption(String ciphertext, String keystream) {
+    public static String decrypt(String ciphertext, String keystream) {
         int[] ciphertextInt = stringToIntArray(ciphertext);
         int[] keystreamInt = stringToIntArray(keystream);
         int[] plaintextInt = new int[ciphertextInt.length];
@@ -75,10 +72,7 @@ public class streamCipherNoShift {
         return plaintext;
     }
 
-    public static void main(String[] args) {
-        // test case (ciphertext should be '101110110')
-        System.out.println("The ciphertext for the plaintext '111001101' and keystream '010111011' is: " + encryption("111001101", "010111011"));
-        // encrypt and decrypt data from input
+    /*public static void main(String[] args) {
         Scanner inEnc = new Scanner(System.in);
         System.out.println("Input plaintext Nr. 1: ");
         String plaintext= inEnc.nextLine();
@@ -91,5 +85,5 @@ public class streamCipherNoShift {
         String keystreamD = inDec.nextLine();
         System.out.println("The ciphertext for the plaintext Nr. 1 is: " + encryption(plaintext, keystreamE));
         System.out.println("The plaintext for the ciphertext Nr. 2 is: " + decryption(ciphertext, keystreamD));
-    }
+    }*/
 }
