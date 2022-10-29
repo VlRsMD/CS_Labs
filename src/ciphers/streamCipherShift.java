@@ -130,11 +130,4 @@ public class streamCipherShift implements cipherText {
         String plaintext = intArrayToString(ciphertextInt);
         return plaintext;
     }
-
-    /*public static void main(String[] args) {
-        Scanner inEnc = new Scanner(System.in);
-        System.out.println("Input plaintext (of length 8): ");
-        String plaintext= inEnc.nextLine();
-        System.out.println("Ciphertext is: " + encryption(plaintext));
-    }*/
 }

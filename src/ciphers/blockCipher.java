@@ -118,14 +118,4 @@ public class blockCipher implements cipherTextKeystr {
         String plaintext = intArrayToString(plaintextInt);
         return plaintext;
     }
-
-    /*public static void main(String[] args) {
-        // encrypt and decrypt data from input
-        Scanner in = new Scanner(System.in);
-        System.out.println("Input plaintext: ");
-        String plaintext= in.nextLine();
-        System.out.println("Input keystream: ");
-        String keystream = in.nextLine();
-        System.out.println("Ciphertext is: " + encrypt(plaintext, keystream));
-    }*/
 }
