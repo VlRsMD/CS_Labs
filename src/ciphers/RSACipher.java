@@ -28,14 +28,59 @@ public class RSACipher implements AssymCipher {
         return primeNum;
     }
 
+    public static int[] gcd1Arr (int fi) {
+        // creating the array of divisors of fi
+        List<Integer> fiDivList = new ArrayList<Integer>();
+        for (int i=2; i<=fi; i++){
+            if (fi%i==0) {
+                fiDivList.add(i);
+            }
+        }
+        int[] fiDiv = fiDivList.stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
+
+        List<Integer> allDivRList = new ArrayList<Integer>();
+        for (int k=2; k<fi; k++)
+            for (int d=2; d<k; d++)
+                if (k%d == 0) {
+                    for (int l=0; l<fiDiv.length; l++) {
+                        if (d==fiDiv[l]) {
+                            allDivRList.add(k);
+                        }
+                    }
+                }
+        int[] allDivR =allDivRList.stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
+
+        List<Integer> gcd1List = new ArrayList<Integer>();
+        for (int x=2; x<fi; x++) {
+            int count = 0;
+            for (int l=0; l<allDivR.length; l++) {
+                if (x==l) {
+                    count++;
+                }
+            }
+            if (count==0) {
+                gcd1List.add(x);
+            }
+        }
+        int[] gcd1 =allDivRList.stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
+        return gcd1;
+    }
+
     public static int[] keyGen(){
         int p = primeNumGen();
         int q = primeNumGen();
         int n = p*q;
-        int z = (p-1)*(q-1);
-        int e = (int) ((Math.random() * ((z-1) - 2)) + 2);
+        int fi = (p-1)*(q-1);
+        int rndE = new Random().nextInt(gcd1Arr(fi).length);
+        int e = gcd1Arr(fi)[rndE];
         int k = (int) ((Math.random())*10 + 1);
-        int d = z*k + 1;
+        int d = fi*k + 1;
         int[] keyPar = new int[3];
         keyPar[0] = n;
         keyPar[1] = e;
