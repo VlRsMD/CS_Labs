@@ -25,9 +25,8 @@ public class storingPasswords {
         String decrDigSign = streamCipherNoShift.decrypt(encrHashTextBin, keystream);
         if (hashTextToBin.equals(decrDigSign) == true) {
             System.out.println("Digital signature check performed successfully.");
+            databaseConnIns DBInsert = new databaseConnIns();
+            DBInsert.insert(id, name, encrHashTextBin);
         } else System.out.println("Digital signature check failed.");
-
-        databaseConIns DBInsert = new databaseConIns();
-        DBInsert.insert(id, name, encrHashTextBin);
     }
 }

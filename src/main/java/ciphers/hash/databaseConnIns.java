@@ -2,7 +2,7 @@ package ciphers.hash;
 
 import java.sql.*;
 
-public class databaseConIns {
+public class databaseConnIns {
     public static Connection connect() {
         String url = "jdbc:sqlite:identifier.sqlite";
         Connection conn = null;
