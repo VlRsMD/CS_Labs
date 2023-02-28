@@ -14,7 +14,6 @@ public class sha256 {
             String hashText = signumRepr.toString(16);
             return hashText;
         }
-
         catch (NoSuchAlgorithmException e) {
             System.out.println("Incorrect algorithm: " + e);
             return null;

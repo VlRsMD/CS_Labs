@@ -11,7 +11,7 @@ public class databaseConnIns {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            System.out.println("An error occurred while connecting MySQL database");
+            System.out.println("An error occurred while connecting to database");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
